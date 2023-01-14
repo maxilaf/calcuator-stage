@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc</title>
+    <style>
+        * {
+            font-size: 30px;
+            font-weight: 600;
+            box-sizing: border-box;
+            font-family: Gotham Rounded, sans-serif;
+        }
+
+        .calculatrice {
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            min-height: 100vh;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+        }
+
+
+        .bt-AC, .bt-egale {
+            width: 200px;
+            grid-column: span 2;
+        }
+
+
+        .output{
+            grid-column: 1 / -1;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            flex-direction: column;
+            padding: 10px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        /* .previous{
+            color: rgba(255,255, 255, 0.75);
+            font-size: 1.5rem;
+        }
+
+        .current{
+            color: white;
+            font-size: 2.5rem;
+        } */
+
+
+        .previous{
+            color: rgba(255,255, 255, 0.75);
+            font-size: 30px;
+        }
+
+        .current{
+            color: white;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculatrice">
+        <div class="output">
+            <div id="previous" class="previous"></div>
+            <div id="current" class="current"></div>
+        </div>
+        <button id="bt-AC" class="bt-AC">AC</button>
+        <button id="bt-DEL" class="bt-DEL">DEL</button>
+        <button id="bt-div" class="bt-div">/</button>
+        <button id="bt-7" class="bt-7">7</button>
+        <button id="bt-8" class="bt-8">8</button>
+        <button id="bt-9" class="bt-9">9</button>
+        <button id="bt-mult" class="bt-mutl">*</button>
+        <button id="bt-4" class="bt-4">4</button>
+        <button id="bt-5" class="bt-5">5</button>
+        <button id="bt-6" class="bt-6">6</button>
+        <button id="bt-add" class="bt-add">+</button>
+        <button id="bt-1" class="bt-1">1</button>
+        <button id="bt-2" class="bt-2">2</button>
+        <button id="bt-3" class="bt-3">3</button>
+        <button id="bt-sous" class="bt-sous">-</button>
+        <button id="bt-point" class="bt-point">.</button>
+        <button id="bt-0" class="bt-0">0</button>
+        <button id="bt-egale" class="bt-egale">=</button>
+    </div>
+
+    <script>
+                
+        // const bt1 = document.getElementsByClassName("bt-1");
+        // const bt2 = document.getElementsByClassName("bt-2");
+        // const bt3 = document.getElementsByClassName("bt-3");
+        // const bt4 = document.getElementsByClassName("bt-4");
+        // const bt5 = document.getElementsByClassName("bt-5");
+        // const bt6 = document.getElementsByClassName("bt-6");
+        // const bt7 = document.getElementsByClassName("bt-7");
+        // const bt8 = document.getElementsByClassName("bt-8");
+        // const bt9 = document.getElementsByClassName("bt-9");
+        // const bt0 = document.getElementsByClassName("bt-0");
+        // const btAC = document.getElementsByClassName("bt-AC");
+        // const btDEL = document.getElementsByClassName("bt-DEL");
+        // const btDiv = document.getElementsByClassName("bt-div");
+        // const btMult = document.getElementsByClassName("bt-mult");
+        // const btAdd = document.getElementsByClassName("bt-add");
+        // const btSous = document.getElementsByClassName("bt-sous");
+        // const btPoint = document.getElementsByClassName("bt-point");
+        // const btEgale = document.getElementsByClassName("bt-egale");
+
+
+        const Div = {
+            previousCalc: document.getElementById("previous"),
+            currentCalc: document.getElementById("current")
+        };
+
+
+        const Boutton = {
+            bt1: document.getElementById("bt-1"),
+            bt2: document.getElementById("bt-2"),
+            bt3: document.getElementById("bt-3"),
+            bt4: document.getElementById("bt-4"),
+            bt5: document.getElementById("bt-5"),
+            bt6: document.getElementById("bt-6"),
+            bt7: document.getElementById("bt-7"),
+            bt8: document.getElementById("bt-8"),
+            bt9: document.getElementById("bt-9"),
+            bt0: document.getElementById("bt-0"),
+            btAC: document.getElementById("bt-AC"),
+            btDEL: document.getElementById("bt-DEL"),
+            btDiv: document.getElementById("bt-div"),
+            btMult: document.getElementById("bt-mult"),
+            btAdd: document.getElementById("bt-add"),
+            btSous: document.getElementById("bt-sous"),
+            btPoint: document.getElementById("bt-point"),
+            btEgale: document.getElementById("bt-egale")
+        };
+
+
+
+        Boutton.bt1.addEventListener('click', () => {
+            calculator.eventBt1();
+        })
+
+        Boutton.bt2.addEventListener('click', () => {
+            calculator.eventBt2();
+        })
+
+        Boutton.bt3.addEventListener('click', () => {
+            calculator.eventBt3();
+        })
+
+        Boutton.bt4.addEventListener('click', () => {
+            calculator.eventBt4();
+        })
+
+        Boutton.bt5.addEventListener('click', () => {
+            calculator.eventBt5();
+        })
+
+        Boutton.bt6.addEventListener('click', () => {
+            calculator.eventBt6();
+        })
+
+        Boutton.bt7.addEventListener('click', () => {
+            calculator.eventBt7();
+        })
+
+        Boutton.bt8.addEventListener('click', () => {
+            calculator.eventBt8();
+        })
+
+        Boutton.bt9.addEventListener('click', () => {
+            calculator.eventBt9();
+        })
+
+        Boutton.bt0.addEventListener('click', () => {
+            calculator.eventBt0();
+        })
+
+        Boutton.btPoint.addEventListener('click', () => {
+            calculator.eventBtPoint();
+        })
+
+        Boutton.btAC.addEventListener('click', () => {
+            calculator.eventBtAC();
+        })
+
+        Boutton.btDEL.addEventListener('click', () => {
+            calculator.eventBtDEL();
+        })
+
+        Boutton.btDiv.addEventListener('click', () => {
+            calculator.eventBtDiv();
+        })
+
+        Boutton.btMult.addEventListener('click', () => {
+            calculator.eventBtMult();
+        })
+
+        Boutton.btAdd.addEventListener('click', () => {
+            calculator.eventBtAdd();
+        })
+
+        Boutton.btSous.addEventListener('click', () => {
+            calculator.eventBtSous();
+        })
+
+        Boutton.btEgale.addEventListener('click', () => {
+            calculator.eventBtEgale();
+        })
+
+
+        class Calculator {
+
+            constructor(currentDiv, previousDiv) {
+                this.result = 0;
+                this.operator = "";
+                this.currentOperation = "";
+                this.previousOperation = "";
+                this.currentDiv = currentDiv;
+                this.previousDiv = previousDiv;
+                this.pushEgale = false;
+                this.pointLet = false;
+                this.clear();
+            }
+
+            clear() {
+                this.currentOperation ="";
+                this.previousOperation = "";
+                this.updateDisplay();
+                
+            }
+
+            eventBt1() {
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "1";
+                this.updateDisplay();
+            }
+
+            eventBt2() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "2";
+                this.updateDisplay();
+            }
+
+            eventBt3() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "3";
+                this.updateDisplay();
+            }
+
+            eventBt4() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "4";
+                this.updateDisplay();
+            }
+
+            eventBt5() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "5";
+                this.updateDisplay();
+            }
+
+            eventBt6() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "6";
+                this.updateDisplay();
+            }
+
+            eventBt7() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "7";
+                this.updateDisplay();
+            }
+
+            eventBt8() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "8";
+                this.updateDisplay();
+            }
+
+            eventBt9() {
+                
+                this.defZero();
+                this.pushEg();
+                this.toStr();
+                this.currentOperation += "9";
+                this.updateDisplay();
+            }
+
+            eventBt0() {
+                this.pushEg();
+                this.toStr();
+                if (this.currentOperation == "") {
+                    this.currentOperation = "0";
+                } else if (this.currentOperation == "0") {
+                    return
+                } else {
+                    this.currentOperation += "0";
+                }
+
+                this.updateDisplay();
+            }
+
+            eventBtPoint() {
+                this.pushEg;
+                this.toStr();
+                if (this.currentOperation == "") {
+                    this.currentOperation == "0.";
+                } else if (this.pointLet) {
+                    return;
+                } else {
+                    this.currentOperation += ".";
+                }
+
+                this.pointLet = true;
+
+                this.updateDisplay();
+            }
+
+            eventBtAC() {
+                this.clear();
+                this.operator = "";
+                this.pointLet = false;
+            }
+
+            eventBtDEL() {
+                if (this.currentOperation == "" || this.currentOperation == "0") {
+                    return;
+                } else {
+                    let tabCut = this.currentOperation.split("");
+                    tabCut.pop();
+                    this.currentOperation = "";
+                    for (let tabBoucle of tabCut) {
+                        this.currentOperation += tabBoucle;
+                    }
+                }
+                this.updateDisplay();
+            }
+
+            eventBtDiv() {
+
+                this.calcul();
+
+                switch (this.operator) {
+                    
+                    case "+":
+                        this.previousOperation += this.currentOperation;
+                        break;
+
+                    case "-":
+                        this.previousOperation -= this.currentOperation;
+                        break;
+
+                    case "*":
+                        this.previousOperation *= this.currentOperation;
+                        break;
+                    
+                    case "/":
+                        this.previousOperation /= this.currentOperation;
+                        break;
+                
+                    default:
+                        this.previousOperation = this.currentOperation;
+                        break;
+                }
+                
+                this.currentOperation = "";
+
+                this.pointLet = false;
+                
+                this.operator = "/";
+
+                this.updateDisplay();
+            }
+
+            eventBtMult() {
+
+                this.calcul();
+
+                switch (this.operator) {
+                    
+                    case "+":
+                        this.previousOperation += this.currentOperation;
+                        break;
+
+                    case "-":
+                        this.previousOperation -= this.currentOperation;
+                        break;
+
+                    case "*":
+                        this.previousOperation *= this.currentOperation;
+                        break;
+                    
+                    case "/":
+                        this.previousOperation /= this.currentOperation;
+                        break;
+                
+                    default:
+                        this.previousOperation = this.currentOperation;
+                        break;
+                }
+
+                this.currentOperation = "";
+
+                this.operator = "*";
+
+                this.pointLet = false;
+
+                this.updateDisplay();
+            }
+
+            eventBtAdd() {
+
+                this.calcul();
+
+                switch (this.operator) {
+                    
+                    case "+":
+                        this.previousOperation += this.currentOperation;
+                        break;
+
+                    case "-":
+                        this.previousOperation -= this.currentOperation;    
+                        break;
+
+                    case "*":
+                        this.previousOperation *= this.currentOperation;
+                        break;
+                    
+                    case "/":
+                        this.previousOperation /= this.currentOperation;
+                        break;
+                
+                    default:
+                        this.previousOperation = this.currentOperation;
+                        break;
+                }
+
+                this.currentOperation = "";
+
+                this.operator = "+";
+
+                this.pointLet = false;
+
+                this.updateDisplay();
+
+
+            }
+
+            eventBtSous() {
+
+                this.calcul();
+
+                switch (this.operator) {
+                    
+                    case "+":
+                        this.previousOperation += this.currentOperation;
+                        break;
+
+                    case "-":
+                        this.previousOperation -= this.currentOperation;
+                        break;
+
+                    case "*":
+                        this.previousOperation *= this.currentOperation;
+                        break;
+                    
+                    case "/":
+                        this.previousOperation /= this.currentOperation;
+                        break;
+                
+                    default:
+                        this.previousOperation = this.currentOperation;
+                        break;
+                }
+
+                
+                this.currentOperation = "";
+
+                this.operator = "-";
+
+                this.pointLet = false;
+
+                this.updateDisplay();
+
+            }
+
+            eventBtEgale() {
+
+                this.calcul();
+
+                switch (this.operator) {
+                    
+                    case "+":
+                        this.previousOperation += this.currentOperation;
+                        break;
+
+                    case "-":
+                        this.previousOperation -= this.currentOperation;
+                        break;
+
+                    case "*":
+                        this.previousOperation *= this.currentOperation;
+                        break;
+                    
+                    case "/":
+                        this.previousOperation /= this.currentOperation;
+                        break;
+                
+                    default:
+                        this.previousOperation = this.currentOperation;
+                        break;
+                }
+
+
+                this.currentOperation = this.previousOperation;
+                this.previousOperation = "";
+
+                this.updateDisplay();
+
+                // this.currentOperation = "";
+
+                this.pushEgale = true;
+
+                this.pointLet = false;
+
+                this.operator = "";
+
+                
+            }
+
+            updateDisplay() {
+                this.currentDiv.innerText = this.currentOperation;
+                this.previousDiv.innerText = this.previousOperation;
+
+                if (this.previousOperation != "" || this.previousOperation != 0){
+                    this.previousDiv.innerText = this.previousOperation + " " + this.operator;
+                }
+
+                console.log(this.currentOperation);
+                console.log(this.previousOperation);
+            }
+
+            calcul() {
+                this.currentOperation = parseFloat(this.currentOperation)
+                this.previousOperation = parseFloat(this.previousOperation)
+            }
+
+            toStr() {
+                this.currentOperation = this.currentOperation.toString();
+                this.previousOperation = this.previousOperation.toString();
+            }
+
+            pushEg() {
+                if (this.pushEgale) {
+                    this.currentOperation = "";
+                }
+                this.pushEgale = false;
+            }
+
+            defZero() {
+                if (this.currentOperation == "0") {
+                    this.currentOperation = "";
+                }
+            }
+
+        }
+
+        const calculator = new Calculator(Div.currentCalc, Div.previousCalc);
+    </script>
+</body>
+</html>
